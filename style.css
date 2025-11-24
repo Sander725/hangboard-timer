@@ -44,8 +44,8 @@
 }
 
 button {
-    padding: 8px 32px;       /* more internal spacing */
-    font-size: 16px;         /* bigger text */
+    padding: 8px 16px;       /* more internal spacing */
+    font-size: 50px;         /* bigger text */
     border-radius: 6px;      /* softer corners */
     border: 1px solid #444;  /* subtle border */
     margin-right: 5px;       /* spacing between buttons */

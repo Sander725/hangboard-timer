@@ -91,7 +91,9 @@ button:hover {
     font-weight: bold;
 }
 
+
 .beep-btn {
+    display: block;          /* nimmt die ganze Zeile */
     width: 100%;
     padding: 15px;
     font-size: 20px;
@@ -99,6 +101,7 @@ button:hover {
     border: none;
     color: white;
     cursor: pointer;
+    box-sizing: border-box;  /* inkl. Padding in 100% Breite */
 }
 
 /* AN = Grün */
@@ -116,45 +119,52 @@ button:hover {
 /* ----- MOBILE VERSION ----- */
 @media (max-width: 600px) {
 
+    /* Body-Rand weg, damit der Beep-Button wirklich ganz breit ist */
+    body {
+        margin: 0;
+    }
+
     /* Gesamtlayout auf Handy untereinander */
     .container {
+        display: flex;
         flex-direction: column;
         height: auto;
         padding: 10px;
+        gap: 10px;
     }
 
-    /* Linke Spalte nimmt volle Breite */
+    /* .left "löst sich auf", die Blöcke werden direkte Flex-Items */
     .left {
         width: 100%;
-        display: flex;
-        flex-direction: column;
+        display: contents;
     }
 
-    /* Jede Block-Box */
+    /* Block-Boxen mittig und mit Abstand zum Rand */
     .block {
-        width: 100%;
-        max-width: none;
-        margin-bottom: 20px;
+        width: 90%;
+        max-width: 400px;
+        margin: 10px auto;   /* auto zentriert */
     }
 
-    /* WICHTIG: Timer zwischen Block I und Block II einfügen */
-    .right {
-        order: 2;          /* Timer kommt nach Block I */
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    /* Block I bleibt oben */
-    .left .block:nth-child(1) {
+    /* Reihenfolge: Block I (1), Timer (2), Block II (3) */
+    .block:nth-of-type(1) {
         order: 1;
     }
 
-    /* Block II kommt nach dem Timer */
-    .left .block:nth-child(2) {
+    .right {
+        order: 2;
+        width: 100%;
+        margin: 10px 0 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .block:nth-of-type(2) {
         order: 3;
     }
 
-    /* Timer-Schrift kleiner auf Handy */
+    /* Timer-Schriften etwas kleiner auf Handy */
     .big-display {
         font-size: 70px;
     }

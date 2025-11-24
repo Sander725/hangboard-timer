@@ -29,6 +29,9 @@ let beepEnabled = true; // Standard: Beep an
 // -------------------------------
 // Seite geladen
 // -------------------------------
+// -------------------------------
+// Seite geladen
+// -------------------------------
 window.addEventListener("load", function() {
 
     beepElement = document.getElementById("beep");
@@ -46,7 +49,31 @@ window.addEventListener("load", function() {
     });
     document.getElementById("stop2").addEventListener("click", stopTimer);
     document.getElementById("reset2").addEventListener("click", resetTimer);
+
+    // ---------- BEEP-TOGGLE-BUTTON ----------
+    const beepToggleBtn = document.getElementById("beepToggle");
+
+    // Initialzustand
+    beepEnabled = true;
+    beepToggleBtn.textContent = "Beep: AN";
+    beepToggleBtn.classList.add("beep-on");
+
+    // Click-Event
+    beepToggleBtn.addEventListener("click", function () {
+        beepEnabled = !beepEnabled;
+
+        if (beepEnabled) {
+            beepToggleBtn.textContent = "Beep: AN";
+            beepToggleBtn.classList.remove("beep-off");
+            beepToggleBtn.classList.add("beep-on");
+        } else {
+            beepToggleBtn.textContent = "Beep: AUS";
+            beepToggleBtn.classList.remove("beep-on");
+            beepToggleBtn.classList.add("beep-off");
+        }
+    });
 });
+
 
 
 // -------------------------------
@@ -203,24 +230,3 @@ function beep() {
 }
 
 
-
-// Toggle Button referenzieren
-const beepToggleBtn = document.getElementById("beepToggle");
-
-// Initial Buttonfarbe setzen
-beepToggleBtn.classList.add("beep-on");
-
-// Click-Event
-beepToggleBtn.addEventListener("click", function () {
-    beepEnabled = !beepEnabled;
-
-    if (beepEnabled) {
-        beepToggleBtn.textContent = "Beep: AN";
-        beepToggleBtn.classList.remove("beep-off");
-        beepToggleBtn.classList.add("beep-on");
-    } else {
-        beepToggleBtn.textContent = "Beep: AUS";
-        beepToggleBtn.classList.remove("beep-on");
-        beepToggleBtn.classList.add("beep-off");
-    }
-});

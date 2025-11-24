@@ -21,6 +21,11 @@ let timerId = null;
 let beepElement = null;
 
 
+// Beep ein/aus
+let beepEnabled = true; // Standard: Beep an
+
+
+
 // -------------------------------
 // Seite geladen
 // -------------------------------
@@ -189,8 +194,33 @@ function updateUI() {
 // Beep
 // -------------------------------
 function beep() {
+    if (!beepEnabled) return; // kein Ton wenn OFF
+    
     if (beepElement) {
         beepElement.currentTime = 0;
         beepElement.play();
     }
 }
+
+
+
+// Toggle Button referenzieren
+const beepToggleBtn = document.getElementById("beepToggle");
+
+// Initial Buttonfarbe setzen
+beepToggleBtn.classList.add("beep-on");
+
+// Click-Event
+beepToggleBtn.addEventListener("click", function () {
+    beepEnabled = !beepEnabled;
+
+    if (beepEnabled) {
+        beepToggleBtn.textContent = "Beep: AN";
+        beepToggleBtn.classList.remove("beep-off");
+        beepToggleBtn.classList.add("beep-on");
+    } else {
+        beepToggleBtn.textContent = "Beep: AUS";
+        beepToggleBtn.classList.remove("beep-on");
+        beepToggleBtn.classList.add("beep-off");
+    }
+});

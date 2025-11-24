@@ -91,6 +91,27 @@ button:hover {
     font-weight: bold;
 }
 
+.beep-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* AN = Grün */
+.beep-on {
+    background-color: #28a745;
+}
+
+/* AUS = Rot */
+.beep-off {
+    background-color: #dc3545;
+}
+
+
 
 /* ----- MOBILE VERSION ----- */
 @media (max-width: 600px) {

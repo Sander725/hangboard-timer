@@ -65,34 +65,29 @@ window.addEventListener("load", function() {
 
     // Click-Event (Beep EIN/AUS)
     beepToggleBtn.addEventListener("click", function () {
-        beepEnabled = !beepEnabled;
 
-        if (beepEnabled) {
-            beepToggleBtn.textContent = "Beep: AN";
-            beepToggleBtn.classList.remove("beep-off");
-            beepToggleBtn.classList.add("beep-on");
-        } else {
-            beepToggleBtn.textContent = "Beep: AUS";
-            beepToggleBtn.classList.remove("beep-on");
-            beepToggleBtn.classList.add("beep-off");
-        }
-    });
+    // Beep umschalten
+    beepEnabled = !beepEnabled;
 
-    // -----------------------------------
-    // iOS AUDIO UNLOCK (WICHTIG FÜR iPad)
-    // -----------------------------------
-    // Beim ersten Tipp auf den Beep-Button wird der Sound ganz kurz abgespielt,
-    // damit iOS Safari die spätere automatische Audio-Wiedergabe erlaubt.
-    beepToggleBtn.addEventListener("click", function () {
-        if (beepElement) {
-            beepElement.play().then(() => {
-                beepElement.pause();
-                beepElement.currentTime = 0;
-            }).catch(() => {
-                // ignorieren – iOS wirft gerne eine Exception beim ersten Versuch
-            });
-        }
-    });
+    if (beepEnabled) {
+        beepToggleBtn.textContent = "Beep: AN";
+        beepToggleBtn.classList.remove("beep-off");
+        beepToggleBtn.classList.add("beep-on");
+    } else {
+        beepToggleBtn.textContent = "Beep: AUS";
+        beepToggleBtn.classList.remove("beep-on");
+        beepToggleBtn.classList.add("beep-off");
+    }
+
+    // iOS AUDIO UNLOCK (1x pro Session)
+    if (beepElement) {
+        beepElement.play().then(() => {
+            beepElement.pause();
+            beepElement.currentTime = 0;
+        }).catch(() => {});
+    }
+});
+
 });
 
 

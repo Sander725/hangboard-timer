@@ -160,7 +160,8 @@ button:hover {
     .block {
         width: 90%;
         max-width: 400px;
-        margin: 10px auto;   /* auto zentriert */
+        margin: 10px auto;
+        display: block; /* WICHTIG: Block bleibt normal */
     }
 
     /* Reihenfolge: Block I (1), Timer (2), Block II (3) */
@@ -209,37 +210,34 @@ button:hover {
     }
 
     /* ----------------------------------------------------------- */
-    /* ⭐ NEU: Start/Stop/Reset gleichmäßig über die Breite verteilen */
+    /* ⭐ Start / Stop / Reset gleichmäßig über die Breite verteilen */
     /* ----------------------------------------------------------- */
 
-    /* Buttons innerhalb eines Blocks als Flex-Reihe */
-    .block > button {
-        flex: 1 1 0;          /* gleichmäßig verteilt */
-        margin: 0 5px;        /* horizontaler Abstand */
-    }
-
-    /* Links/rechts Rand fixen */
-    .block > button:first-of-type {
-        margin-left: 0;
-    }
-    .block > button:last-of-type {
-        margin-right: 0;
-    }
-
-    /* Buttons im Block als Row anordnen */
-    .block {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Aber NUR die Buttons sollen nebeneinander stehen */
-    .block > button {
+    /* Buttons nebeneinander darstellen */
+    .block button {
         display: inline-flex;
         justify-content: center;
         align-items: center;
+        flex: 1 1 0;
+        margin: 0 5px;
+    }
+
+    /* Rand an den Außenkanten entfernen */
+    .block button:first-of-type {
+        margin-left: 0;
+    }
+    .block button:last-of-type {
+        margin-right: 0;
+    }
+
+    /* Damit die 3 Buttons wirklich in einer Zeile bleiben */
+    .block {
+        text-align: center;
+        white-space: nowrap;
     }
 }
 /* ----- ENDE MOBILE VERSION ----- */
+
 
 
 

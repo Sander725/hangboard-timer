@@ -32,6 +32,9 @@ let beepEnabled = true; // Standard: Beep an
 // -------------------------------
 // Seite geladen
 // -------------------------------
+// -------------------------------
+// Seite geladen
+// -------------------------------
 window.addEventListener("load", function() {
 
     beepElement = document.getElementById("beep");
@@ -50,7 +53,9 @@ window.addEventListener("load", function() {
     document.getElementById("stop2").addEventListener("click", stopTimer);
     document.getElementById("reset2").addEventListener("click", resetTimer);
 
-    // ---------- BEEP-TOGGLE-BUTTON ----------
+    // -----------------------------------
+    // BEEP-TOGGLE BUTTON
+    // -----------------------------------
     const beepToggleBtn = document.getElementById("beepToggle");
 
     // Initialzustand
@@ -58,7 +63,7 @@ window.addEventListener("load", function() {
     beepToggleBtn.textContent = "Beep: AN";
     beepToggleBtn.classList.add("beep-on");
 
-    // Click-Event
+    // Click-Event (Beep EIN/AUS)
     beepToggleBtn.addEventListener("click", function () {
         beepEnabled = !beepEnabled;
 
@@ -72,8 +77,23 @@ window.addEventListener("load", function() {
             beepToggleBtn.classList.add("beep-off");
         }
     });
-});
 
+    // -----------------------------------
+    // iOS AUDIO UNLOCK (WICHTIG FÜR iPad)
+    // -----------------------------------
+    // Beim ersten Tipp auf den Beep-Button wird der Sound ganz kurz abgespielt,
+    // damit iOS Safari die spätere automatische Audio-Wiedergabe erlaubt.
+    beepToggleBtn.addEventListener("click", function () {
+        if (beepElement) {
+            beepElement.play().then(() => {
+                beepElement.pause();
+                beepElement.currentTime = 0;
+            }).catch(() => {
+                // ignorieren – iOS wirft gerne eine Exception beim ersten Versuch
+            });
+        }
+    });
+});
 
 
 // -------------------------------

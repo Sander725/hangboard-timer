@@ -193,7 +193,7 @@ button:hover {
         font-size: 18px;
     }
 
-    /* Buttons mobile-friendly */
+    /* Buttons mobile-friendly (Grundstil) */
     button {
         padding: 12px 20px;
         font-size: 18px;
@@ -206,8 +206,40 @@ button:hover {
         font-size: 18px;
         padding: 8px;
     }
+
+    /* ----------------------------------------------------------- */
+    /* ⭐ NEU: Start/Stop/Reset gleichmäßig über die Breite verteilen */
+    /* ----------------------------------------------------------- */
+
+    /* Buttons innerhalb eines Blocks als Flex-Reihe */
+    .block > button {
+        flex: 1 1 0;          /* gleichmäßig verteilt */
+        margin: 0 5px;        /* horizontaler Abstand */
+    }
+
+    /* Links/rechts Rand fixen */
+    .block > button:first-of-type {
+        margin-left: 0;
+    }
+    .block > button:last-of-type {
+        margin-right: 0;
+    }
+
+    /* Buttons im Block als Row anordnen */
+    .block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Aber NUR die Buttons sollen nebeneinander stehen */
+    .block > button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 /* ----- ENDE MOBILE VERSION ----- */
+
 
 
 /* ----- TABLET VERSION ----- */

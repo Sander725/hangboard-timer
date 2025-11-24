@@ -90,3 +90,74 @@ button:hover {
     font-size: 120px;
     font-weight: bold;
 }
+
+
+/* ----- MOBILE VERSION ----- */
+@media (max-width: 600px) {
+
+    /* Gesamtlayout auf Handy untereinander */
+    .container {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    /* Linke Spalte nimmt volle Breite */
+    .left {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Jede Block-Box */
+    .block {
+        width: 100%;
+        max-width: none;
+        margin-bottom: 20px;
+    }
+
+    /* WICHTIG: Timer zwischen Block I und Block II einfügen */
+    .right {
+        order: 2;          /* Timer kommt nach Block I */
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Block I bleibt oben */
+    .left .block:nth-child(1) {
+        order: 1;
+    }
+
+    /* Block II kommt nach dem Timer */
+    .left .block:nth-child(2) {
+        order: 3;
+    }
+
+    /* Timer-Schrift kleiner auf Handy */
+    .big-display {
+        font-size: 70px;
+    }
+
+    .phase-big {
+        font-size: 32px;
+    }
+
+    .reps-big {
+        font-size: 18px;
+    }
+
+    /* Buttons mobile-friendly */
+    button {
+        padding: 12px 20px;
+        font-size: 18px;
+        min-height: 44px;
+        margin-right: 6px;
+    }
+
+    /* Inputs mobile-friendly */
+    input {
+        font-size: 18px;
+        padding: 8px;
+    }
+}
+/* ----- ENDE MOBILE VERSION ----- */

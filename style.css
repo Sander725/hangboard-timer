@@ -1,0 +1,78 @@
+/* Jede Eingabezeile in den Blöcken */
+.row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+/* Einzelner Trainingsblock */
+.block {
+    border: 1px solid #050404;
+    padding: 15px;
+    margin: 20px;
+    border-radius: 10px;
+    max-width: 300px;
+    background-color: #17d3bd;
+}
+
+
+/* Gesamtcontainer: Links (Blöcke) + Rechts (Timer) */
+.container {
+    display: flex;
+    height: 100vh;     /* gesamte Höhe */
+    padding: 20px;
+    gap: 20px;
+}
+
+
+/* Linke Spalte mit den Blöcken */
+.left {
+    width: 300px;               /* Sidebar-Breite */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* Rechte Spalte für Timer-Anzeige */
+.right {
+    flex: 1;                    /* nimmt restlichen Platz ein */
+    display: flex;
+    flex-direction: column;     /* WICHTIG → alles untereinander */
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Container für Phase, Reps und große Uhr */
+.timer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;           /* verhindert Nebeneinanderlaufen */
+    width: 100%;
+    text-align: center;
+}
+
+
+/* Große Phasen-Anzeige ("HANG", "PAUSE", "Ready", "FERTIG") */
+.phase-big {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+/* kleine Anzeige unter der Phase ("Reps übrig: X") */
+.reps-big {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+
+/* GROßE UHR */
+.big-display {
+    font-size: 120px;
+    font-weight: bold;
+}

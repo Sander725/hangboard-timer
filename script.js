@@ -131,12 +131,15 @@ function tick(onTime, offTime) {
     remaining--;
     updateUI();
 
+    // Beep eine Sekunde früher abfeuern
+    if (remaining === 1) {
+        beep();
+    }
+
     if (remaining > 0) return;
 
     // Phase: WORK beendet
     if (phase === "work") {
-
-        beep();
 
         if (repsRemaining === 1) {
             stopTimer();
@@ -154,8 +157,6 @@ function tick(onTime, offTime) {
     // Phase: REST beendet
     if (phase === "rest") {
 
-        beep();
-
         repsRemaining--;
 
         phase = "work";
@@ -164,6 +165,7 @@ function tick(onTime, offTime) {
         return;
     }
 }
+
 
 
 // -------------------------------

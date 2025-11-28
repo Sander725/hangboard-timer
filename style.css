@@ -402,6 +402,7 @@ button:hover {
         /* Fortschrittsbalken im Mobile etwas schmaler */
     .right #progressContainer {
         width: 90%;
+        max-width: 500px;
         margin: 0 auto 15px auto;
     }
 

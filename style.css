@@ -131,10 +131,70 @@ button:hover {
     background-color: #dc3545;
 }
 
+/* Titel */
+.training-title {
+    margin-top: 40px;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Box */
+.training-box {
+    max-width: 700px;
+    margin: 20px auto 60px auto;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f3f3f3;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+/* Accordion Buttons */
+.accordion-btn {
+    width: 100%;
+    padding: 15px;
+    background: #17d3bd;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 20px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: background 0.2s ease;
+}
+.accordion-btn:hover {
+    background: #0fc8b3;
+}
+.accordion-btn.active {
+    background: #0ebaa5;
+}
+
+/* Accordion Content */
+.accordion-content {
+    overflow: hidden;
+    max-height: 0;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: max-height 0.25s ease-out;
+    padding: 0 15px;
+}
+
+.accordion-content ul {
+    padding: 10px 5px 15px 20px;
+    margin: 0;
+}
+
+.accordion-content li {
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
 
 
 /* ----- MOBILE VERSION ----- */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
 
     /* Body-Rand weg, damit der Beep-Button wirklich ganz breit ist */
     body {
@@ -242,7 +302,7 @@ button:hover {
 
 
 /* ----- TABLET VERSION ----- */
-@media (min-width: 600px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1024px) {
     .block {
         max-width: 360px;
         width: 360px;

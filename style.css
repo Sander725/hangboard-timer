@@ -338,6 +338,13 @@ button:hover {
         margin-bottom: 10px;
     }
 
+        /* Fortschrittsbalken im Mobile etwas schmaler */
+    .right #progressContainer {
+        width: 90%;
+        margin: 0 auto 15px auto;
+    }
+
+
 }
 
 
@@ -390,6 +397,13 @@ button:hover {
     .accordion-item {
         margin-bottom: 12px;
     }
+
+        /* Fortschrittsbalken im Mobile etwas schmaler */
+    .right #progressContainer {
+        width: 90%;
+        margin: 0 auto 15px auto;
+    }
+
 }
 
 /* ========================= */
@@ -502,4 +516,104 @@ body {
 
 .darkmode .accordion-content {
     box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+
+
+/* Fortschrittsbalken Container */
+#progressContainer {
+    width: 100%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+/* Fortschrittsbalken volle Breite in rechter Spalte */
+.right #progressContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+
+/* Fortschrittsbalken selbst */
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background-color: #28a745; /* grün */
+    transition: width 0.25s linear;
+}
+
+/* Darkmode Anpassung */
+.darkmode #progressContainer {
+    background: #333;
+}
+
+.darkmode #progressBar {
+    background-color: #4cd964; /* helleres grün für darkmode */
+}
+
+
+/* Fortschrittsbalken unter dem Timer */
+.right #progressContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto 20px auto;
+}
+
+/* Hintergrund */
+#progressContainer {
+    height: 12px;
+    background: #444;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Fortschrittsbalken – Verlauf Rot → Gelb → Grün */
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        #d9534f 0%,      /* Rot */
+        #f0ad4e 40%,     /* Orange/Gelb */
+        #5cb85c 100%     /* Grün */
+    );
+    transition: width 0.3s linear;
+    border-radius: 6px;
+}
+
+/* Darkmode Anpassung */
+.darkmode #progressContainer {
+    background: #222;
+}
+
+.darkmode #progressBar {
+    background: linear-gradient(90deg, 
+        #ff6b6b 0%, 
+        #ffd93d 40%, 
+        #4cd964 100%
+    );
+}
+
+#progressContainer {
+    width: 100%;
+    max-width: 600px;
+    height: 12px;
+    background: #444;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 10px auto 20px auto;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: red; /* Farbe wird dynamisch ersetzt */
+    transition: width 0.25s linear;
+}
+
+/* Darkmode */
+.darkmode #progressContainer {
+    background: #222;
 }

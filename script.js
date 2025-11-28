@@ -25,6 +25,14 @@ let beepElement = null;
 let beepEnabled = true; // Standard: Beep an
 
 
+// gesamte Dauer des Blocks
+let totalDuration = 0;   
+
+// vergangene Sekunden
+let elapsed = 0;           
+
+
+
 
 // -------------------------------
 // Seite geladen
@@ -114,6 +122,10 @@ function startTimerFromBlock(block) {
     remaining = onTime;
     repsRemaining = reps;
 
+    calculateTotalDuration(onTime, offTime, reps);
+    updateProgressBar();
+
+
     updateUI();
 
     // Jede Sekunde tick() aufrufen
@@ -129,6 +141,8 @@ function startTimerFromBlock(block) {
 function tick(onTime, offTime) {
 
     remaining--;
+    elapsed++;
+    updateProgressBar();
     updateUI();
 
     // Beep eine Sekunde früher abfeuern
@@ -144,6 +158,9 @@ function tick(onTime, offTime) {
         if (repsRemaining === 1) {
             stopTimer();
             phase = "finished";
+            elapsed = totalDuration;
+            updateProgressBar();
+
             updateUI();
             return;
         }
@@ -190,6 +207,28 @@ function resetTimer() {
     activeBlock = null;
     updateUI();
 }
+
+function calculateTotalDuration(onTime, offTime, reps) {
+    // Für reps Zyklen gibt es (reps - 1) Pausen
+    totalDuration = onTime * reps + offTime * (reps - 1);
+    elapsed = 0; // reset
+}
+
+function updateProgressBar() {
+    const bar = document.getElementById("progressBar");
+    if (!bar || totalDuration === 0) return;
+
+    const progress = elapsed / totalDuration; // 0–1
+    const percent = Math.min(100, progress * 100);
+    bar.style.width = percent + "%";
+
+    // Dynamischer Farbwert rot -> grün
+    const r = Math.round(255 * (1 - progress));
+    const g = Math.round(255 * progress);
+    bar.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
+}
+
+
 
 
 // -------------------------------

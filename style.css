@@ -194,7 +194,7 @@ button:hover {
 
 
 /* ----- MOBILE VERSION ----- */
-@media (max-width: 768px) {
+@media (max-width: 820px) {
 
     /* Body-Rand weg, damit der Beep-Button wirklich ganz breit ist */
     body {
@@ -344,7 +344,7 @@ button:hover {
 
 
 /* ----- TABLET VERSION ----- */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 821px) and (max-width: 1024px) {
     .block {
         max-width: 360px;
         width: 360px;

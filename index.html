@@ -6,84 +6,82 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
+
 <button id="beepToggle" class="beep-btn">Beep: AN</button>
 <button id="darkmodeToggle" class="darkmode-btn">🌙</button>
 
+<div class="container">
 
-    <div class="container">
+    <!-- BLÖCKE LINKS -->
+    <div class="left">
 
-        <!-- LINKER BEREICH MIT DEN BLOECKEN -->
-        <div class="left">
+        <div class="block">
+            <h2>BLOCK I</h2>
+            <button id="start1">Start</button>
+            <button id="stop1">Stop</button>
+            <button id="reset1">Reset</button>
 
-            <div class="block">
-                <h2>BLOCK I</h2>
-                <button id="start1">Start</button>
-                <button id="stop1">Stop</button>
-                <button id="reset1">Reset</button>
-                <div class="row">
-                    <label>On-Time:</label>
-                    <input id="ontime1" type="number" value="10">
-                </div>
-
-                <div class="row">
-                    <label>Off-Time:</label>
-                    <input id="offtime1" type="number" value="30">
-                </div>
-
-                <div class="row">
-                    <label>Repeats:</label>
-                    <input id="reps1" type="number" value="6">
-                </div>
+            <div class="row">
+                <label>On-Time:</label>
+                <input id="ontime1" type="number" value="10">
             </div>
 
-            <div class="block">
-                <h2>BLOCK II</h2>
-                <button id="start2">Start</button>
-                <button id="stop2">Stop</button>
-                <button id="reset2">Reset</button>
-                <div class="row">
-                    <label>On-Time:</label>
-                    <input id="ontime2" type="number" value="7">
-                </div>
-
-                <div class="row">
-                    <label>Off-Time:</label>
-                    <input id="offtime2" type="number" value="3">
-                </div>
-
-                <div class="row">
-                    <label>Repeats:</label>
-                    <input id="reps2" type="number" value="6">
-                </div>
+            <div class="row">
+                <label>Off-Time:</label>
+                <input id="offtime1" type="number" value="30">
             </div>
 
-
+            <div class="row">
+                <label>Repeats:</label>
+                <input id="reps1" type="number" value="6">
+            </div>
         </div>
 
-        <!-- RECHTER BEREICH MIT DER GROSSEN ANZEIGE -->
-        <div class="right">
+        <div class="block">
+            <h2>BLOCK II</h2>
+            <button id="start2">Start</button>
+            <button id="stop2">Stop</button>
+            <button id="reset2">Reset</button>
 
-            <div id="phaseBig" class="phase-big">Ready</div>
-            <div id="repsBig" class="reps-big"></div>
-            <div id="countdownBig" class="big-display">Let's go!</div>
+            <div class="row">
+                <label>On-Time:</label>
+                <input id="ontime2" type="number" value="7">
+            </div>
 
-            <div id="progressContainer">
-                <div id="progressBar"></div>
+            <div class="row">
+                <label>Off-Time:</label>
+                <input id="offtime2" type="number" value="3">
+            </div>
+
+            <div class="row">
+                <label>Repeats:</label>
+                <input id="reps2" type="number" value="6">
             </div>
         </div>
 
     </div>
 
-    <audio id="beep" preload="auto" src="beep.mp3"></audio>
+    <!-- TIMER-ANZEIGE -->
+    <div class="right">
 
-    <!-- =============================== -->
-<!--   TRAININGSVORSCHLAG – INFOBOX  -->
-<!-- =============================== -->
+        <div id="phaseBig" class="phase-big">Ready</div>
+        <div id="repsBig" class="reps-big"></div>
+        <div id="countdownBig" class="big-display">Let's go!</div>
 
-<h2 class="training-title">Trainingsvorschlag (Verletzungsvorbeugung) (unter Vorbehalt)
-</h2>
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+        </div>
 
+    </div>
+</div>
+
+<!-- BEEP -->
+<audio id="beep" preload="auto" src="beep.mp3"></audio>
+
+<!-- TRAININGS-INFOS (Accordion) -->
+<h2 class="training-title">Trainingsvorschlag (Verletzungsvorbeugung) (unter Vorbehalt)</h2>
 <div class="training-box">
 
     <!-- Einführung -->
@@ -165,13 +163,7 @@
 
 </div>
 
-
-<!-- =============================== -->
-<!--        TRAININGSMETHODEN        -->
-<!-- =============================== -->
-
 <h2 class="training-title">Trainingsmethoden (unter Vorbehalt)</h2>
-
 <div class="training-box">
 
     <!-- Max Hangs -->
@@ -289,6 +281,7 @@
 
 </div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
 </body>
 </html>

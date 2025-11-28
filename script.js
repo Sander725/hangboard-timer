@@ -1,158 +1,115 @@
-// -------------------------------
-// Globale Variablen für den Timer
-// -------------------------------
-
-// aktueller Block (1 oder 2)
+// -------------------------------------------------
+// Globale Variablen
+// -------------------------------------------------
 let activeBlock = null;
-
-// Phase: "work" | "rest" | null | "finished"
-let phase = null;
-
-// Countdown Sekunden
+let phase = null;          // "work", "rest", "finished", null
 let remaining = 0;
-
-// Wiederholungen
 let repsRemaining = 0;
-
-// ID des setInterval
 let timerId = null;
 
-// Audio-Beep
+let totalDuration = 0;
+let elapsed = 0;
+
+let beepEnabled = true;
 let beepElement = null;
 
 
-// Beep ein/aus
-let beepEnabled = true; // Standard: Beep an
-
-
-// gesamte Dauer des Blocks
-let totalDuration = 0;   
-
-// vergangene Sekunden
-let elapsed = 0;           
-
-
-
-
-// -------------------------------
+// -------------------------------------------------
 // Seite geladen
-// -------------------------------
-// -------------------------------
-// Seite geladen
-// -------------------------------
-// -------------------------------
-// Seite geladen
-// -------------------------------
-window.addEventListener("load", function() {
+// -------------------------------------------------
+window.addEventListener("load", () => {
 
     beepElement = document.getElementById("beep");
 
-    // Block 1 Buttons
-    document.getElementById("start1").addEventListener("click", function() {
-        startTimerFromBlock(1);
-    });
-    document.getElementById("stop1").addEventListener("click", stopTimer);
-    document.getElementById("reset1").addEventListener("click", resetTimer);
-
-    // Block 2 Buttons
-    document.getElementById("start2").addEventListener("click", function() {
-        startTimerFromBlock(2);
-    });
-    document.getElementById("stop2").addEventListener("click", stopTimer);
-    document.getElementById("reset2").addEventListener("click", resetTimer);
-
-    // -----------------------------------
-    // BEEP-TOGGLE BUTTON
-    // -----------------------------------
-    const beepToggleBtn = document.getElementById("beepToggle");
-
-    // Initialzustand
-    beepEnabled = true;
-    beepToggleBtn.textContent = "Beep: AN";
-    beepToggleBtn.classList.add("beep-on");
-
-    // Click-Event (Beep EIN/AUS)
-    beepToggleBtn.addEventListener("click", function () {
-
-    // Beep umschalten
-    beepEnabled = !beepEnabled;
-
-    if (beepEnabled) {
-        beepToggleBtn.textContent = "Beep: AN";
-        beepToggleBtn.classList.remove("beep-off");
-        beepToggleBtn.classList.add("beep-on");
-    } else {
-        beepToggleBtn.textContent = "Beep: AUS";
-        beepToggleBtn.classList.remove("beep-on");
-        beepToggleBtn.classList.add("beep-off");
+    // Block-Buttons
+    for (let b of [1, 2]) {
+        document.getElementById(`start${b}`).addEventListener("click", () => startTimerFromBlock(b));
+        document.getElementById(`stop${b}`).addEventListener("click", stopTimer);
+        document.getElementById(`reset${b}`).addEventListener("click", resetTimer);
     }
 
-    // iOS AUDIO UNLOCK (1x pro Session)
-    if (beepElement) {
+    // Beep Toggle
+    const beepBtn = document.getElementById("beepToggle");
+    beepBtn.classList.add("beep-on");
+
+    beepBtn.addEventListener("click", () => {
+        beepEnabled = !beepEnabled;
+        beepBtn.textContent = beepEnabled ? "Beep: AN" : "Beep: AUS";
+        beepBtn.classList.toggle("beep-on", beepEnabled);
+        beepBtn.classList.toggle("beep-off", !beepEnabled);
+
+        // iOS unlock
         beepElement.play().then(() => {
             beepElement.pause();
             beepElement.currentTime = 0;
         }).catch(() => {});
+    });
+
+    // Darkmode Toggle
+    const darkBtn = document.getElementById("darkmodeToggle");
+
+    if (localStorage.getItem("darkmode") === "true") {
+        document.body.classList.add("darkmode");
+        darkBtn.textContent = "☀️";
     }
+
+    darkBtn.addEventListener("click", () => {
+        document.body.classList.toggle("darkmode");
+        const active = document.body.classList.contains("darkmode");
+        darkBtn.textContent = active ? "☀️" : "🌙";
+        localStorage.setItem("darkmode", active);
+    });
+
+    // Accordion
+    document.querySelectorAll(".accordion-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            btn.classList.toggle("active");
+            const content = btn.nextElementSibling;
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+        });
+    });
 });
 
-});
 
-
-// -------------------------------
-// Timer starten, je nach Block
-// -------------------------------
+// -------------------------------------------------
+// Timer starten
+// -------------------------------------------------
 function startTimerFromBlock(block) {
 
-    // merken, welcher Block aktiv ist
     activeBlock = block;
 
-    // Falls schon ein Timer läuft: stoppen
-    if (timerId !== null) {
-        clearInterval(timerId);
-    }
+    let on = parseInt(document.getElementById(`ontime${block}`).value);
+    let off = parseInt(document.getElementById(`offtime${block}`).value);
+    let reps = parseInt(document.getElementById(`reps${block}`).value);
 
-    // IDs abhängig von Block
-    let onTime   = parseInt(document.getElementById(`ontime${block}`).value);
-    let offTime  = parseInt(document.getElementById(`offtime${block}`).value);
-    let reps     = parseInt(document.getElementById(`reps${block}`).value);
+    stopTimer();
 
-    // Initialisieren
     phase = "work";
-    remaining = onTime;
+    remaining = on;
     repsRemaining = reps;
 
-    calculateTotalDuration(onTime, offTime, reps);
+    calculateTotalDuration(on, off, reps);
     updateProgressBar();
-
-
     updateUI();
 
-    // Jede Sekunde tick() aufrufen
-    timerId = setInterval(function() {
-        tick(onTime, offTime);
-    }, 1000);
+    timerId = setInterval(() => tick(on, off), 1000);
 }
 
 
-// -------------------------------
-// Jede Sekunde
-// -------------------------------
-function tick(onTime, offTime) {
+// -------------------------------------------------
+// Tick
+// -------------------------------------------------
+function tick(on, off) {
 
     remaining--;
     elapsed++;
     updateProgressBar();
     updateUI();
 
-    // Beep eine Sekunde früher abfeuern
-    if (remaining === 1) {
-        beep();
-    }
+    if (remaining === 1) beep();
 
     if (remaining > 0) return;
 
-    // Phase: WORK beendet
     if (phase === "work") {
 
         if (repsRemaining === 1) {
@@ -160,34 +117,28 @@ function tick(onTime, offTime) {
             phase = "finished";
             elapsed = totalDuration;
             updateProgressBar();
-
             updateUI();
             return;
         }
 
         phase = "rest";
-        remaining = offTime;
+        remaining = off;
         updateUI();
         return;
     }
 
-    // Phase: REST beendet
     if (phase === "rest") {
-
         repsRemaining--;
-
         phase = "work";
-        remaining = onTime;
+        remaining = on;
         updateUI();
-        return;
     }
 }
 
 
-
-// -------------------------------
-// Timer stoppen
-// -------------------------------
+// -------------------------------------------------
+// Timer stoppen + Reset
+// -------------------------------------------------
 function stopTimer() {
     if (timerId !== null) {
         clearInterval(timerId);
@@ -195,10 +146,6 @@ function stopTimer() {
     }
 }
 
-
-// -------------------------------
-// Reset
-// -------------------------------
 function resetTimer() {
     stopTimer();
     phase = null;
@@ -208,45 +155,43 @@ function resetTimer() {
     updateUI();
 }
 
-function calculateTotalDuration(onTime, offTime, reps) {
-    // Für reps Zyklen gibt es (reps - 1) Pausen
-    totalDuration = onTime * reps + offTime * (reps - 1);
-    elapsed = 0; // reset
+
+// -------------------------------------------------
+// Fortschrittsbalken
+// -------------------------------------------------
+function calculateTotalDuration(on, off, reps) {
+    totalDuration = on * reps + off * (reps - 1);
+    elapsed = 0;
 }
 
 function updateProgressBar() {
     const bar = document.getElementById("progressBar");
-    if (!bar || totalDuration === 0) return;
+    if (totalDuration === 0) return;
 
-    const progress = elapsed / totalDuration; // 0–1
-    const percent = Math.min(100, progress * 100);
-    bar.style.width = percent + "%";
+    const percent = (elapsed / totalDuration) * 100;
+    bar.style.width = Math.min(100, percent) + "%";
 
-    // Dynamischer Farbwert rot -> grün
-    const r = Math.round(255 * (1 - progress));
-    const g = Math.round(255 * progress);
+    // dynamische Farbe rot → grün
+    const p = elapsed / totalDuration;
+    const r = Math.round(255 * (1 - p));
+    const g = Math.round(255 * p);
     bar.style.backgroundColor = `rgb(${r}, ${g}, 0)`;
 }
 
 
-
-
-// -------------------------------
-// UI aktualisieren
-// -------------------------------
+// -------------------------------------------------
+// UI
+// -------------------------------------------------
 function updateUI() {
     const big = document.getElementById("countdownBig");
     const phaseText = document.getElementById("phaseBig");
     const repsText = document.getElementById("repsBig");
 
-    if (!big || !phaseText || !repsText) return;
-
-    // Phase & Reps aktualisieren
     if (phase === "work") {
         phaseText.textContent = "HANG";
         repsText.textContent = "Reps übrig: " + repsRemaining;
         big.textContent = remaining + " s";
-        big.style.color = "red";        
+        big.style.color = "red";
         phaseText.style.color = "red";
 
     } else if (phase === "rest") {
@@ -271,53 +216,12 @@ function updateUI() {
 }
 
 
-
-
-// -------------------------------
+// -------------------------------------------------
 // Beep
-// -------------------------------
+// -------------------------------------------------
 function beep() {
-    if (!beepEnabled) return; // kein Ton wenn OFF
-    
-    if (beepElement) {
+    if (beepEnabled && beepElement) {
         beepElement.currentTime = 0;
         beepElement.play();
     }
 }
-
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        btn.classList.toggle("active");
-        const content = btn.nextElementSibling;
-        if (content.style.maxHeight) {
-            content.style.maxHeight = null;
-        } else {
-            content.style.maxHeight = content.scrollHeight + "px";
-        }
-    });
-});
-
-
-
-// ================================
-// DARKMODE - Toggle
-// ================================
-window.addEventListener("load", function () {
-    const btn = document.getElementById("darkmodeToggle");
-
-    // Prüfe gespeicherte Einstellung
-    if (localStorage.getItem("darkmode") === "true") {
-        document.body.classList.add("darkmode");
-        btn.textContent = "☀️";
-    }
-
-    btn.addEventListener("click", () => {
-        document.body.classList.toggle("darkmode");
-
-        const active = document.body.classList.contains("darkmode");
-        btn.textContent = active ? "☀️" : "🌙";
-
-        // Speichern
-        localStorage.setItem("darkmode", active);
-    });
-});

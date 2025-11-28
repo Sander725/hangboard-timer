@@ -1,119 +1,62 @@
-.row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;   /* Label links, Input rechts */
-    align-items: center;              /* sauber ausgerichtet */
-    margin-bottom: 10px;
-    gap: 10px;                        /* etwas Abstand */
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+:root {
+    --bg: #ffffff;
+    --text: #000;
+    --box: #f3f3f3;
+    --block-bg: #17d3bd;
+    --acc-btn: #17d3bd;
+    --acc-btn-hover: #0fc8b3;
+    --acc-btn-active: #0ebaa5;
+    --content-bg: #ffffff;
+    --content-border: #e0e0e0;
+    --content-text: #000;
+    --content-dot: #555;
 }
 
-.row input[type="number"] {
-    width: 100px;          /* GRÖSSERES Input-Feld */
-    font-size: 18px;      
-    padding: 6px 8px;
-    text-align: right;     /* Zahl rechtsbündig */
-    box-sizing: border-box;
+.darkmode {
+    --bg: #111;
+    --text: #e5e5e5;
+    --box: #1b1b1b;
+    --block-bg: #108f7d;
+    --acc-btn: #108f7d;
+    --acc-btn-hover: #0c7568;
+    --acc-btn-active: #0a6056;
+    --content-bg: #1b1b1b;
+    --content-border: #333;
+    --content-text: #e5e5e5;
+    --content-dot: #aaa;
 }
 
-
-/* Einzelner Trainingsblock */
-.block {
-    border: 1px solid #050404;
-    padding: 15px;
-    margin: 5px;
-    border-radius: 10px;
-    max-width: 300px;
-    background-color: #17d3bd;
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Abstand unter den drei Buttons im Block */
-.block button:nth-of-type(3) {
-    margin-bottom: 10px;   /* vorher kaum Abstand */
-}
-
-
-/* Gesamtcontainer: Links (Blöcke) + Rechts (Timer) */
-.container {
-    display: flex;
-    height: 100vh;     /* gesamte Höhe */
-    padding: 20px;
-    gap: 20px;
-}
-
-
-/* Linke Spalte mit den Blöcken */
-.left {
-    width: 300px;               /* Sidebar-Breite */
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-
-/* Rechte Spalte für Timer-Anzeige */
-.right {
-    flex: 1;                    /* nimmt restlichen Platz ein */
-    display: flex;
-    flex-direction: column;     /* WICHTIG → alles untereinander */
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
-    border-radius: 12px;
-    padding: 20px;
-}
-
+/* =====================================================
+   BUTTONS
+===================================================== */
 button {
-    padding: 8px 16px;       /* more internal spacing */
-    font-size: 16px;         /* bigger text */
-    border-radius: 6px;      /* softer corners */
-    border: 1px solid #444;  /* subtle border */
-    margin-right: 5px;       /* spacing between buttons */
-    cursor: pointer;         /* pointer cursor on hover */
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.block button:nth-of-type(3) {
+    margin-bottom: 10px;
 }
 
 button:hover {
-    background-color: #eee;  /* subtle hover effect */
+    background: #eee;
 }
-
-
-
-
-/* Container für Phase, Reps und große Uhr */
-.timer-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 400px;           /* verhindert Nebeneinanderlaufen */
-    width: 100%;
-    text-align: center;
-}
-
-
-/* Große Phasen-Anzeige ("HANG", "PAUSE", "Ready", "FERTIG") */
-.phase-big {
-    font-size: 48px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-
-/* kleine Anzeige unter der Phase ("Reps übrig: X") */
-.reps-big {
-    font-size: 20px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-
-/* GROßE UHR */
-.big-display {
-    font-size: 100px;
-    font-weight: bold;
-}
-
 
 .beep-btn {
-    display: block;          /* nimmt die ganze Zeile */
     width: 100%;
     padding: 15px;
     font-size: 20px;
@@ -121,20 +64,121 @@ button:hover {
     border: none;
     color: white;
     cursor: pointer;
-    box-sizing: border-box;  /* inkl. Padding in 100% Breite */
 }
 
-/* AN = Grün */
-.beep-on {
-    background-color: #28a745;
+.beep-on  { background: #28a745; }
+.beep-off { background: #dc3545; }
+
+.darkmode-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
 }
 
-/* AUS = Rot */
-.beep-off {
-    background-color: #dc3545;
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    height: 100vh;
 }
 
-/* Titel */
+.left {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.block {
+    background: var(--block-bg);
+    border: 1px solid #050404;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 10px;
+    max-width: 300px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.row input[type="number"] {
+    width: 100px;
+    font-size: 18px;
+    padding: 6px 8px;
+    text-align: right;
+}
+
+.right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* =====================================================
+   TIMER
+===================================================== */
+
+.phase-big {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.reps-big {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.big-display {
+    font-size: 100px;
+    font-weight: bold;
+}
+
+/* Progressbar */
+#progressContainer {
+    width: 100%;
+    max-width: 600px;
+    height: 12px;
+    background: #444;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 10px auto 20px auto;
+}
+
+.darkmode #progressContainer {
+    background: #222;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: red;
+    transition: width 0.25s linear;
+}
+
+/* =====================================================
+   ACCORDION
+===================================================== */
+
 .training-title {
     margin-top: 40px;
     font-size: 32px;
@@ -142,360 +186,32 @@ button:hover {
     text-align: center;
 }
 
-/* Box */
 .training-box {
     max-width: 700px;
     margin: 20px auto 60px auto;
     padding: 20px;
     border-radius: 12px;
-    background: #f3f3f3;
-    box-shadow: 0 0 10px rgba(0,0,0,0.08);
-}
-
-/* Accordion Buttons */
-.accordion-btn {
-    width: 100%;
-    padding: 15px;
-    background: #17d3bd;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 20px;
-    cursor: pointer;
-    margin-bottom: 8px;
-    transition: background 0.2s ease;
-}
-.accordion-btn:hover {
-    background: #0fc8b3;
-}
-.accordion-btn.active {
-    background: #0ebaa5;
-}
-
-/* Accordion Content */
-.accordion-content {
-    overflow: hidden;
-    max-height: 0;
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    transition: max-height 0.25s ease-out;
-    padding: 0 15px;
-}
-
-.accordion-content ul {
-    padding: 10px 5px 15px 20px;
-    margin: 0;
-}
-
-.accordion-content li {
-    margin-bottom: 6px;
-    font-size: 16px;
-}
-
-
-
-/* ----- MOBILE VERSION ----- */
-@media (max-width: 820px) {
-
-    /* Body-Rand weg, damit der Beep-Button wirklich ganz breit ist */
-    body {
-        margin: 0;
-    }
-
-    /* Gesamtlayout auf Handy untereinander */
-    .container {
-        display: flex;
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
-        gap: 10px;
-    }
-
-    /* .left "löst sich auf", die Blöcke werden direkte Flex-Items */
-    .left {
-        width: 100%;
-        display: contents;
-    }
-
-    /* Block-Boxen mittig und mit Abstand zum Rand */
-    .block {
-        width: 90%;
-        max-width: 400px;
-        margin: 10px auto;
-        display: block; /* WICHTIG: Block bleibt normal */
-    }
-
-    /* Reihenfolge: Block I (1), Timer (2), Block II (3) */
-    .block:nth-of-type(1) {
-        order: 1;
-    }
-
-    .right {
-        order: 2;
-        width: 100%;
-        margin: 10px 0 20px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .block:nth-of-type(2) {
-        order: 3;
-    }
-
-    /* Timer-Schriften etwas kleiner auf Handy */
-    .big-display {
-        font-size: 70px;
-    }
-
-    .phase-big {
-        font-size: 32px;
-    }
-
-    .reps-big {
-        font-size: 18px;
-    }
-
-    /* Buttons mobile-friendly (Grundstil) */
-    button {
-        padding: 12px 20px;
-        font-size: 18px;
-        min-height: 44px;
-        margin-right: 6px;
-    }
-
-    /* Inputs mobile-friendly */
-    input {
-        font-size: 18px;
-        padding: 8px;
-    }
-
-    /* ----------------------------------------------------------- */
-    /* ⭐ Start / Stop / Reset gleichmäßig über die Breite verteilen */
-    /* ----------------------------------------------------------- */
-
-    /* Buttons nebeneinander darstellen */
-    .block button {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        flex: 1 1 0;
-        margin: 0 5px;
-    }
-
-    /* Rand an den Außenkanten entfernen */
-    .block button:first-of-type {
-        margin-left: 0;
-    }
-    .block button:last-of-type {    
-        margin-right: 0;
-    }
-
-    /* Damit die 3 Buttons wirklich in einer Zeile bleiben */
-    .block {
-        text-align: center;
-        white-space: nowrap;
-    }
-
-    /* Abstand zur Hauptseite */
-    .training-title {
-        margin-top: 30px;
-        margin-bottom: 20px;
-        font-size: 26px;
-    }
-
-    /* Container enger & harmonischer */
-    .training-box {
-        width: 92%;
-        margin: 0 auto 40px auto;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 0 8px rgba(0,0,0,0.08);
-    }
-
-    /* Accordion Buttons: fingerfreundlich */
-    .accordion-btn {
-        font-size: 18px;
-        padding: 14px;
-        border-radius: 10px;
-        line-height: 1.3;
-    }
-
-    /* Accordion Inhalte */
-    .accordion-content ul {
-        padding-left: 16px;
-    }
-
-    .accordion-content li {
-        font-size: 15px;
-        margin-bottom: 6px;
-        line-height: 1.35;
-    }
-
-    .accordion-item {
-        margin-bottom: 10px;
-    }
-
-        /* Fortschrittsbalken im Mobile etwas schmaler */
-    .right #progressContainer {
-        width: 90%;
-        max-width: 350px;
-        margin: 0 auto 15px auto;
-    }
-
-
-}
-
-
-/* ----- ENDE MOBILE VERSION ----- */
-
-
-
-
-/* ----- TABLET VERSION ----- */
-@media (min-width: 821px) and (max-width: 1024px) {
-    .block {
-        max-width: 360px;
-        width: 360px;
-    }
-
-    .block button {
-        flex: 1 1 auto;
-        min-width: 0;
-        margin-right: 6px;
-    }
-
-    .block button:last-child {
-        margin-right: 0;
-    }
-
-    .training-title {
-        margin-top: 35px;
-        font-size: 30px;
-        text-align: center;
-    }
-
-    .training-box {
-        max-width: 80%;
-        margin: 20px auto 60px auto;
-        padding: 20px;
-        border-radius: 14px;
-    }
-
-    .accordion-btn {
-        font-size: 20px;
-        padding: 16px;
-        border-radius: 10px;
-    }
-
-    .accordion-content li {
-        font-size: 17px;
-        line-height: 1.4;
-    }
-
-    .accordion-item {
-        margin-bottom: 12px;
-    }
-
-        /* Fortschrittsbalken im Mobile etwas schmaler */
-    .right #progressContainer {
-        width: 90%;
-        max-width: 500px;
-        margin: 0 auto 15px auto;
-    }
-
-}
-
-/* ========================= */
-/*    DARKMODE – TOGGLE      */
-/* ========================= */
-
-.darkmode-btn {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 2000;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 8px;
-    transition: background 0.2s ease;
-}
-
-.darkmode-btn:hover {
-    background: rgba(0,0,0,0.07);
-}
-
-/* ========================= */
-/*       FARBSYSTEM          */
-/* ========================= */
-
-/* Default Lightmode Farben */
-:root {
-    --bg: #ffffff;
-    --text: #000000;
-    --box: #f3f3f3;
-    --block-bg: #17d3bd;
-    --accordion-btn: #17d3bd;
-    --accordion-btn-hover: #0fc8b3;
-    --accordion-btn-active: #0ebaa5;
-    --content-bg: #ffffff;
-    --content-border: #e0e0e0;
-    --content-text: #000000;
-    --content-li-dot: #555;
-}
-
-
-/* Darkmode Farben */
-.darkmode {
-    --bg: #111111;
-    --text: #e5e5e5;
-    --box: #1b1b1b;
-    --block-bg: #108f7d;
-    --accordion-btn: #108f7d;
-    --accordion-btn-hover: #0c7568;
-    --accordion-btn-active: #0a6056;
-    --content-bg: #1b1b1b;
-    --content-border: #333333;
-    --content-text: #e5e5e5;
-    --content-li-dot: #aaaaaa;
-}
-
-
-/* Anwendung der Variablen */
-body {
-    background: var(--bg);
-    color: var(--text);
-    transition: background 0.3s ease, color 0.3s ease;
-}
-
-/* Blöcke */
-.block {
-    background-color: var(--block-bg);
-}
-
-/* Trainingsbox */
-.training-box {
     background: var(--box);
 }
 
-/* Accordion Buttons */
 .accordion-btn {
-    background: var(--accordion-btn);
+    width: 100%;
+    padding: 15px;
+    background: var(--acc-btn);
+    color: black;
+    border: none;
+    font-size: 20px;
+    border-radius: 8px;
+    text-align: left;
+    margin-bottom: 8px;
+    cursor: pointer;
 }
-.accordion-btn:hover {
-    background: var(--accordion-btn-hover);
-}
-.accordion-btn.active {
-    background: var(--accordion-btn-active);
-}
+.accordion-btn:hover { background: var(--acc-btn-hover); }
+.accordion-btn.active { background: var(--acc-btn-active); }
 
-/* Accordion Content – Darkmode-kompatibel */
 .accordion-content {
+    overflow: hidden;
+    max-height: 0;
     background: var(--content-bg);
     border: 1px solid var(--content-border);
     border-radius: 8px;
@@ -504,118 +220,105 @@ body {
 
 .accordion-content ul {
     color: var(--content-text);
+    padding: 10px 5px 15px 20px;
 }
 
 .accordion-content li {
     color: var(--content-text);
-    position: relative;
+    margin-bottom: 6px;
 }
-
-/* dunkle Listenpunkte */
 .accordion-content li::marker {
-    color: var(--content-li-dot);
+    color: var(--content-dot);
 }
 
-.darkmode .accordion-content {
-    box-shadow: 0 0 10px rgba(255,255,255,0.05);
+/* =====================================================
+   MOBILE VERSION
+===================================================== */
+
+@media (max-width: 820px), (max-width: 1024px) and (orientation: portrait) {
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .left {
+        width: 100%;
+        display: contents; /* Blöcke werden normale Flex-Items */
+    }
+
+    /* Block I (1), Timer (2), Block II (3) */
+    .block:nth-of-type(1) { order: 1; }
+    .right              { order: 2; }
+    .block:nth-of-type(2) { order: 3; }
+
+    /* Größe der Blöcke */
+    .block {
+        width: 90%;
+        max-width: 400px;
+        margin: 10px auto;
+    }
+
+    /* Timer etwas kleiner */
+    .big-display { font-size: 70px; }
+    .phase-big  { font-size: 32px; }
+    .reps-big   { font-size: 18px; }
+
+    /* Fortschrittsbalken schmaler */
+    #progressContainer {
+        width: 90%;
+        max-width: 350px;
+    }
 }
 
 
-/* Fortschrittsbalken Container */
-#progressContainer {
-    width: 100%;
-    height: 10px;
-    background: #ddd;
-    border-radius: 6px;
-    overflow: hidden;
-    margin-bottom: 20px;
+/* =====================================================
+   TABLET VERSION
+===================================================== */
+
+@media (min-width: 821px) and (max-width: 1024px) and (orientation: landscape) {
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        height: 100vh;
+        padding: 20px;
+    }
+
+    .left {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .block {
+        max-width: 360px;
+        width: 360px;
+        margin: 10px 0;
+    }
+
+    .right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Desktop-Timer-Größen */
+    .big-display { font-size: 100px; }
+    .phase-big  { font-size: 48px; }
+    .reps-big   { font-size: 20px; }
+
+    #progressContainer {
+        width: 100%;
+        max-width: 600px;
+    }
 }
 
-/* Fortschrittsbalken volle Breite in rechter Spalte */
-.right #progressContainer {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto 20px auto;
-}
 
-
-/* Fortschrittsbalken selbst */
-#progressBar {
-    height: 100%;
-    width: 0%;
-    background-color: #28a745; /* grün */
-    transition: width 0.25s linear;
-}
-
-/* Darkmode Anpassung */
-.darkmode #progressContainer {
-    background: #333;
-}
-
-.darkmode #progressBar {
-    background-color: #4cd964; /* helleres grün für darkmode */
-}
-
-
-/* Fortschrittsbalken unter dem Timer */
-.right #progressContainer {
-    width: 100%;
-    max-width: 600px;
-    margin: 10px auto 20px auto;
-}
-
-/* Hintergrund */
-#progressContainer {
-    height: 12px;
-    background: #444;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-/* Fortschrittsbalken – Verlauf Rot → Gelb → Grün */
-#progressBar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, 
-        #d9534f 0%,      /* Rot */
-        #f0ad4e 40%,     /* Orange/Gelb */
-        #5cb85c 100%     /* Grün */
-    );
-    transition: width 0.3s linear;
-    border-radius: 6px;
-}
-
-/* Darkmode Anpassung */
-.darkmode #progressContainer {
-    background: #222;
-}
-
-.darkmode #progressBar {
-    background: linear-gradient(90deg, 
-        #ff6b6b 0%, 
-        #ffd93d 40%, 
-        #4cd964 100%
-    );
-}
-
-#progressContainer {
-    width: 100%;
-    max-width: 600px;
-    height: 12px;
-    background: #444;
-    border-radius: 6px;
-    overflow: hidden;
-    margin: 10px auto 20px auto;
-}
-
-#progressBar {
-    height: 100%;
-    width: 0%;
-    background: red; /* Farbe wird dynamisch ersetzt */
-    transition: width 0.25s linear;
-}
-
-/* Darkmode */
-.darkmode #progressContainer {
-    background: #222;
-}

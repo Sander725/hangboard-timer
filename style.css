@@ -289,7 +289,7 @@ button:hover {
     .block button:first-of-type {
         margin-left: 0;
     }
-    .block button:last-of-type {
+    .block button:last-of-type {    
         margin-right: 0;
     }
 

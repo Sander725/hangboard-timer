@@ -57,6 +57,9 @@
     flex-direction: column;     /* WICHTIG → alles untereinander */
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 20px;
 }
 
 button {
@@ -387,4 +390,116 @@ button:hover {
     .accordion-item {
         margin-bottom: 12px;
     }
+}
+
+/* ========================= */
+/*    DARKMODE – TOGGLE      */
+/* ========================= */
+
+.darkmode-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2000;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.darkmode-btn:hover {
+    background: rgba(0,0,0,0.07);
+}
+
+/* ========================= */
+/*       FARBSYSTEM          */
+/* ========================= */
+
+/* Default Lightmode Farben */
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --box: #f3f3f3;
+    --block-bg: #17d3bd;
+    --accordion-btn: #17d3bd;
+    --accordion-btn-hover: #0fc8b3;
+    --accordion-btn-active: #0ebaa5;
+    --content-bg: #ffffff;
+    --content-border: #e0e0e0;
+    --content-text: #000000;
+    --content-li-dot: #555;
+}
+
+
+/* Darkmode Farben */
+.darkmode {
+    --bg: #111111;
+    --text: #e5e5e5;
+    --box: #1b1b1b;
+    --block-bg: #108f7d;
+    --accordion-btn: #108f7d;
+    --accordion-btn-hover: #0c7568;
+    --accordion-btn-active: #0a6056;
+    --content-bg: #1b1b1b;
+    --content-border: #333333;
+    --content-text: #e5e5e5;
+    --content-li-dot: #aaaaaa;
+}
+
+
+/* Anwendung der Variablen */
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Blöcke */
+.block {
+    background-color: var(--block-bg);
+}
+
+/* Trainingsbox */
+.training-box {
+    background: var(--box);
+}
+
+/* Accordion Buttons */
+.accordion-btn {
+    background: var(--accordion-btn);
+}
+.accordion-btn:hover {
+    background: var(--accordion-btn-hover);
+}
+.accordion-btn.active {
+    background: var(--accordion-btn-active);
+}
+
+/* Accordion Content – Darkmode-kompatibel */
+.accordion-content {
+    background: var(--content-bg);
+    border: 1px solid var(--content-border);
+    border-radius: 8px;
+    padding: 0 15px;
+}
+
+.accordion-content ul {
+    color: var(--content-text);
+}
+
+.accordion-content li {
+    color: var(--content-text);
+    position: relative;
+}
+
+/* dunkle Listenpunkte */
+.accordion-content li::marker {
+    color: var(--content-li-dot);
+}
+
+.darkmode .accordion-content {
+    box-shadow: 0 0 10px rgba(255,255,255,0.05);
 }

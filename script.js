@@ -258,3 +258,27 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     });
 });
 
+
+
+// ================================
+// DARKMODE - Toggle
+// ================================
+window.addEventListener("load", function () {
+    const btn = document.getElementById("darkmodeToggle");
+
+    // Prüfe gespeicherte Einstellung
+    if (localStorage.getItem("darkmode") === "true") {
+        document.body.classList.add("darkmode");
+        btn.textContent = "☀️";
+    }
+
+    btn.addEventListener("click", () => {
+        document.body.classList.toggle("darkmode");
+
+        const active = document.body.classList.contains("darkmode");
+        btn.textContent = active ? "☀️" : "🌙";
+
+        // Speichern
+        localStorage.setItem("darkmode", active);
+    });
+});

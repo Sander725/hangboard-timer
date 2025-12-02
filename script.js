@@ -84,6 +84,9 @@ function startTimerFromBlock(block) {
 
     stopTimer();
 
+    // Wake Lock anfordern
+    requestWakeLock();
+
     // NEU: Vorbereitungsphase
     phase = "prepare";
     remaining = 5;   // 5 Sekunden Countdown
@@ -157,6 +160,10 @@ function stopTimer() {
         clearInterval(timerId);
         timerId = null;
     }
+
+    
+    // Bildschirm wieder freigeben
+    releaseWakeLock();
 }
 
 function resetTimer() {
@@ -244,5 +251,34 @@ function beep() {
     if (beepEnabled && beepElement) {
         beepElement.currentTime = 0;
         beepElement.play();
+    }
+}
+
+let wakeLock = null;
+
+async function requestWakeLock() {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+
+            // Falls der Wake Lock z.B. nach Bildschirmrotation verloren geht:
+            wakeLock.addEventListener('release', () => {
+                console.log('Wake Lock wurde freigegeben');
+            });
+
+            console.log('Wake Lock aktiv');
+        } else {
+            console.log('Wake Lock API wird in diesem Browser nicht unterstützt');
+        }
+    } catch (err) {
+        console.error(`${err.name}: ${err.message}`);
+    }
+}
+
+function releaseWakeLock() {
+    if (wakeLock) {
+        wakeLock.release();
+        wakeLock = null;
+        console.log('Wake Lock manuell freigegeben');
     }
 }

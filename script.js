@@ -84,8 +84,10 @@ function startTimerFromBlock(block) {
 
     stopTimer();
 
-    phase = "work";
-    remaining = on;
+    // NEU: Vorbereitungsphase
+    phase = "prepare";
+    remaining = 5;   // 5 Sekunden Countdown
+
     repsRemaining = reps;
 
     calculateTotalDuration(on, off, reps);
@@ -94,6 +96,7 @@ function startTimerFromBlock(block) {
 
     timerId = setInterval(() => tick(on, off), 1000);
 }
+
 
 
 // -------------------------------------------------
@@ -110,6 +113,15 @@ function tick(on, off) {
 
     if (remaining > 0) return;
 
+    // Übergang von Vorbereitungsphase zu Arbeitsphase
+    if (phase === "prepare") {
+        phase = "work";
+        remaining = on;
+        updateUI();
+        return;
+    }
+
+    // Übergang zwischen Arbeits- und Ruhephase
     if (phase === "work") {
 
         if (repsRemaining === 1) {
@@ -134,6 +146,7 @@ function tick(on, off) {
         updateUI();
     }
 }
+
 
 
 // -------------------------------------------------
@@ -206,6 +219,14 @@ function updateUI() {
         repsText.textContent = "";
         big.textContent = "Done!";
         phaseText.style.color = "green";
+
+    } else if (phase === "prepare") {
+        phaseText.textContent = "GET READY";
+        repsText.textContent = "";
+        big.textContent = remaining + " s";
+        big.style.color = "orange";
+        phaseText.style.color = "orange";
+
 
     } else {
         phaseText.textContent = "Ready";
